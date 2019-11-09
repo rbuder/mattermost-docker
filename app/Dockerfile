@@ -5,9 +5,9 @@ ENV PATH="/mattermost/bin:${PATH}"
 ENV MM_VERSION=5.16.3
 
 # Build argument to set Mattermost edition
-ARG edition=enterprise
-ARG PUID=2000
-ARG PGID=2000
+ARG edition=team
+ARG PUID=1000
+ARG PGID=1000
 ARG MM_BINARY=
 
 
@@ -39,7 +39,7 @@ RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
 USER mattermost
 
 #Healthcheck to make sure container is ready
-HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
+HEALTHCHECK CMD curl --fail http://localhost:8065 || exit 1
 
 # Configure entrypoint and command
 COPY entrypoint.sh /
@@ -48,7 +48,7 @@ WORKDIR /mattermost
 CMD ["mattermost"]
 
 # Expose port 8000 of the container
-EXPOSE 8000
+EXPOSE 8065
 
 # Declare volumes for mount point directories
 VOLUME ["/mattermost/data", "/mattermost/logs", "/mattermost/config", "/mattermost/plugins", "/mattermost/client/plugins"]
