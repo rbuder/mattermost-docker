@@ -23,10 +23,10 @@ services:
     build:
       context: app
       # uncomment following lines for team edition or change UID/GID
-      # args:
-      #   - edition=team
-      #   - PUID=1000
-      #   - PGID=1000
+      args:
+        - edition=team
+        - PUID=1000
+        - PGID=1000
     restart: unless-stopped
     volumes:
       - ./volumes/app/mattermost/config:/mattermost/config:rw
@@ -47,18 +47,20 @@ services:
 
       # in case your config is not in default location
       #- MM_CONFIG=/mattermost/config/config.json
-
-  web:
-    build: web
     ports:
-      - "80:80"
-      - "443:443"
-    read_only: true
-    restart: unless-stopped
-    volumes:
-      # This directory must have cert files if you want to enable SSL
-      - ./volumes/web/cert:/cert:ro
-      - /etc/localtime:/etc/localtime:ro
-    # Uncomment for SSL
-    # environment:
-    #  - MATTERMOST_ENABLE_SSL=true
+      - "8065:8065"
+
+  # web:
+  #   build: web
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   read_only: true
+  #   restart: unless-stopped
+  #   volumes:
+  #     # This directory must have cert files if you want to enable SSL
+  #     - ./volumes/web/cert:/cert:ro
+  #     - /etc/localtime:/etc/localtime:ro
+  #   # Uncomment for SSL
+  #   # environment:
+  #   #  - MATTERMOST_ENABLE_SSL=true
